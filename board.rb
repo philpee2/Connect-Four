@@ -34,12 +34,12 @@ class Board
     puts column_numbers_string
   end
 
-  # returns nil if there is no winner at the given position, or the string
-  # representing the winning chip if there is
+  # returns nil if there is no winner at the given position, or returns the
+  # string representing the winning chip if there is
   def check_winner_at(x, y, num_to_win)
     chip = get_chip_at(x, y)
-    # Find the end points of all sequences of chips containing the chip at (x, y)
-    # Then check if any of them are a winning sequence
+    # Find the end points of all sequences of chips containing the chip at
+    # (x, y). Then check if any of them are a winning sequence
     end_points = find_end_points(x, y, chip)
     if end_points.any? { |point| winning_end_point?(point, num_to_win) }
       chip
@@ -71,14 +71,19 @@ class Board
 
   private
 
+  # Find all the end points of possible sequences which contain (x, y)
   def find_end_points(x, y, chip)
     end_points = @DIR_DELTAS.keys.map { |dir| end_point_in_direction(x, y, chip, dir) }
     end_points.uniq { |point| point.take(2) }
   end
 
+  # Find the end point of a possible sequence which contains (x, y) in a given
+  # direction
   def end_point_in_direction(x, y, chip, dir)
-    # TODO: Short circuit this to stop searching once it has reached the number
-    # of chips in a row needed to win.
+    # TODO: Currently this will keep searching for an end point until it reaches
+    # an empty space, the end of the board, or an opposing chip. It would be
+    # more efficient to also stop searching if the distance searched exceeds
+    # the number of chips needed in a row to win.
     check_x = x
     check_y = y
     loop do
@@ -93,6 +98,8 @@ class Board
     end
   end
 
+  # Determine if the given point, which is an end point of a sequence, is the
+  # end point of a winning sequence of chips
   def winning_end_point?(point, num_to_win)
     x = point[0]
     y = point[1]
