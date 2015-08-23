@@ -54,7 +54,9 @@ class Game
     column = nil
     loop do
       puts "Player #{@current_player}, choose a column"
-      column = get_input('The value is invalid') { |val| val.to_i > 0 }.to_i
+      column = get_input('The value is invalid') do |val|
+        val.to_i.between?(1, @width)
+      end.to_i
       if @board.column_full?(column)
         puts "That column is full"
       else
