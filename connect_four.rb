@@ -1,4 +1,5 @@
 require './board'
+require 'colorize'
 
 # Continually ask the user for a value, until one is entered which returns
 # true for the passed in validator block

@@ -149,7 +149,11 @@ class Board
         # numbers
         "  "
       else
-        " " + chip
+        if chip == 'x'
+          " " + chip.red
+        else
+          " " + chip.blue
+        end
       end
     end
     no_nils.join('|')
